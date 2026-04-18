@@ -3,12 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Оплата прошла успешно</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Оплата успешна — Санаторий Локомотив</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(145deg, #e8f0e8 0%, #d4e0d4 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 36px;
+            box-shadow: 0 25px 45px -12px rgba(0, 40, 0, 0.25);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a3a1a 0%, #2d5a2d 100%);
+            padding: 24px 32px;
+            border-bottom: 3px solid #ffc107;
+        }
+        .sanatorium-name {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+        }
         .success-container {
             text-align: center;
-            padding: 60px 30px;
+            padding: 50px 30px;
         }
         .success-icon {
             font-size: 80px;
@@ -43,26 +75,31 @@
             color: #666;
             font-size: 0.9rem;
         }
+        .footer {
+            background: #eef3e6;
+            padding: 16px 32px;
+            text-align: center;
+            color: #4a6240;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header">
-            <div class="header-left">
-                <h1 class="sanatorium-name">Санаторий «Локомотив»</h1>
-            </div>
+            <h1 class="sanatorium-name">Санаторий «Локомотив»</h1>
         </header>
         
         <div class="success-container">
             <div class="success-icon">✅</div>
             <h2 class="success-title">Оплата прошла успешно!</h2>
             <p class="success-message" id="successMessage">
-                Стиральная машина включена.<br>
-                Она будет работать 2 часа 10 минут.
+                Загрузка...
             </p>
-            <a href="/?device=01" class="btn-home" id="backButton">Вернуться</a>
+            <a href="#" class="btn-home" id="backButton">Вернуться на главную</a>
             <p class="auto-message">
-                Если розетка не включилась — обратитесь к администратору.
+                Розетка включится автоматически в течение минуты.<br>
+                Если этого не произошло — обратитесь к администратору.
             </p>
         </div>
         
@@ -92,7 +129,12 @@
             const deviceName = DEVICE_NAMES[deviceId] || 'Стиральная машина';
             document.getElementById('successMessage').innerHTML = 
                 `${deviceName} включена.<br>Она будет работать 2 часа 10 минут.`;
-            document.getElementById('backButton').href = `/?device=${deviceId}`;
+            
+            // ВАЖНОЕ ИСПРАВЛЕНИЕ: правильный путь для кнопки "Вернуться"
+            // Получаем базовый путь репозитория из текущего URL
+            const path = window.location.pathname;
+            const basePath = path.substring(0, path.lastIndexOf('/'));
+            document.getElementById('backButton').href = `${basePath}/?device=${deviceId}`;
         })();
     </script>
 </body>
