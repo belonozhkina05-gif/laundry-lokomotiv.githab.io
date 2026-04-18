@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата прошла успешно</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .success-container {
+            text-align: center;
+            padding: 60px 30px;
+        }
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        .success-title {
+            font-size: 2rem;
+            color: #2d5a2d;
+            margin-bottom: 20px;
+        }
+        .success-message {
+            font-size: 1.2rem;
+            color: #4a5c3e;
+            margin-bottom: 30px;
+        }
+        .btn-home {
+            background: #2d6a2d;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-home:hover {
+            background: #1e4a1e;
+        }
+        .auto-message {
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-left">
+                <h1 class="sanatorium-name">Санаторий «Локомотив»</h1>
+            </div>
+        </header>
+        
+        <div class="success-container">
+            <div class="success-icon">✅</div>
+            <h2 class="success-title">Оплата прошла успешно!</h2>
+            <p class="success-message" id="successMessage">
+                Стиральная машина включена.<br>
+                Она будет работать 2 часа 10 минут.
+            </p>
+            <a href="/" class="btn-home" id="backButton">Вернуться</a>
+            <p class="auto-message">
+                Если розетка не включилась — обратитесь к администратору.
+            </p>
+        </div>
+        
+        <footer class="footer">
+            <p>© Санаторий «Локомотив» • Сервис аренды стиральной машины</p>
+        </footer>
+    </div>
+    
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const deviceId = urlParams.get('device') || '01';
+            
+            const DEVICE_NAMES = {
+                '01': 'Стиральная машина №1',
+                '02': 'Стиральная машина №2',
+                '03': 'Стиральная машина №3',
+                '04': 'Стиральная машина №4',
+                '05': 'Стиральная машина №5',
+                '06': 'Стиральная машина №6',
+                '07': 'Стиральная машина №7',
+                '08': 'Стиральная машина №8',
+                '09': 'Стиральная машина №9',
+                '10': 'Стиральная машина №10'
+            };
+            
+            const deviceName = DEVICE_NAMES[deviceId] || 'Стиральная машина';
+            document.getElementById('successMessage').innerHTML = 
+                `${deviceName} включена.<br>Она будет работать 2 часа 10 минут.`;
+            document.getElementById('backButton').href = `/?device=${deviceId}`;
+        })();
+    </script>
+</body>
+</html>

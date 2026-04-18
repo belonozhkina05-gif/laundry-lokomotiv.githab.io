@@ -23,14 +23,13 @@
 
         <!-- Основной контент -->
         <main class="main">
-            <!-- Левая часть: описание и тариф -->
             <div class="info-section">
                 <div class="service-card">
                     <div class="service-icon">🧺</div>
-                    <h2>Стиральная машина</h2>
+                    <h2 id="deviceName">Стиральная машина №1</h2>
                     <p class="service-desc">
-                        Воспользуйтесь стиральной машиной в удобное для вас время.<br>
-                        Оплата производится через ЮKassa.
+                        Отсканируйте QR-код на машине, чтобы начать стирку.<br>
+                        Оплата производится через ЮMoney.
                     </p>
                 </div>
 
@@ -38,21 +37,20 @@
                     <div class="tariff-badge">Единый тариф</div>
                     <div class="tariff-details">
                         <span class="tariff-time">⏱️ 2 часа 10 минут</span>
-                        <span class="tariff-price">500 ₽</span>
+                        <span class="tariff-price">1 ₽</span>
                     </div>
                     <p class="tariff-note">Розетка включится автоматически после оплаты</p>
                 </div>
             </div>
 
-            <!-- Правая часть: форма оплаты -->
             <div class="payment-section">
                 <h3>Перейти к оплате</h3>
                 <p class="payment-hint">
-                    Нажмите кнопку ниже, чтобы перейти на защищённую страницу оплаты ЮKassa.
+                    Нажмите кнопку ниже, чтобы перейти на защищённую страницу оплаты ЮMoney.
                 </p>
                 
                 <button class="btn-pay" id="payButton">
-                    <span class="btn-text">Оплатить 500 ₽</span>
+                    <span class="btn-text">Оплатить 1 ₽</span>
                     <span class="btn-arrow">→</span>
                 </button>
 
@@ -61,10 +59,10 @@
                 <div class="info-block">
                     <h4>Как это работает</h4>
                     <ol class="steps">
-                        <li>Вы нажимаете «Оплатить»</li>
-                        <li>Переходите на страницу ЮKassa и оплачиваете</li>
-                        <li>После успешной оплаты розетка стиральной машины включается</li>
-                        <li>Через 2 часа 10 минут розетка автоматически выключится</li>
+                        <li>Нажмите «Оплатить»</li>
+                        <li>Оплатите 1 рубль через ЮMoney</li>
+                        <li>После оплаты розетка включится автоматически</li>
+                        <li>Через 2 часа 10 минут розетка выключится</li>
                     </ol>
                 </div>
 
@@ -74,7 +72,6 @@
             </div>
         </main>
 
-        <!-- Подвал -->
         <footer class="footer">
             <p>© Санаторий «Локомотив» • Сервис аренды стиральной машины</p>
         </footer>
@@ -84,25 +81,43 @@
         (function() {
             'use strict';
 
-            // ========== КОНФИГУРАЦИЯ ==========
-            const YOOKASSA_PAYMENT_URL = 'https://yoomoney.ru/quickpay/button-widget'; // ЗАМЕНИТЕ на реальную ссылку из ЮKassa
-            // Или если у вас есть API для создания платежа:
-            // const PAYMENT_API_URL = '/create-payment';
+            // ========== НАСТРОЙКИ ==========
+            const WALLET = '4100118020422729';
             
-            const TARIFF_PRICE = 500;
-            const TARIFF_MINUTES = 130; // 2 часа 10 минут
-
-            // ========== DOM ЭЛЕМЕНТЫ ==========
-            const userEmailSpan = document.getElementById('userEmail');
-            const editEmailBtn = document.getElementById('editEmailBtn');
-            const payButton = document.getElementById('payButton');
-            const statusMessage = document.getElementById('statusMessage');
+            // Получаем ID устройства из URL (?device=01)
+            const urlParams = new URLSearchParams(window.location.search);
+            const DEVICE_ID = urlParams.get('device') || '01';
+            
+            // Названия устройств
+            const DEVICE_NAMES = {
+                '01': 'Стиральная машина №1',
+                '02': 'Стиральная машина №2',
+                '03': 'Стиральная машина №3',
+                '04': 'Стиральная машина №4',
+                '05': 'Стиральная машина №5',
+                '06': 'Стиральная машина №6',
+                '07': 'Стиральная машина №7',
+                '08': 'Стиральная машина №8',
+                '09': 'Стиральная машина №9',
+                '10': 'Стиральная машина №10'
+            };
+            
+            // Устанавливаем название устройства
+            document.getElementById('deviceName').textContent = DEVICE_NAMES[DEVICE_ID] || 'Стиральная машина';
+            
+            const DOM_ELEMENTS = {
+                userEmailSpan: document.getElementById('userEmail'),
+                editEmailBtn: document.getElementById('editEmailBtn'),
+                payButton: document.getElementById('payButton'),
+                statusMessage: document.getElementById('statusMessage'),
+                emailBlock: document.getElementById('emailBlock')
+            };
 
             // ========== РАБОТА С EMAIL ==========
             function loadEmail() {
                 const savedEmail = localStorage.getItem('userEmail');
                 if (savedEmail) {
-                    userEmailSpan.textContent = savedEmail;
+                    DOM_ELEMENTS.userEmailSpan.textContent = savedEmail;
                 } else {
                     promptForEmail();
                 }
@@ -112,7 +127,7 @@
                 const email = prompt('Для оплаты введите ваш email:', 'guest@mail.ru');
                 if (email && email.includes('@')) {
                     localStorage.setItem('userEmail', email);
-                    userEmailSpan.textContent = email;
+                    DOM_ELEMENTS.userEmailSpan.textContent = email;
                     showStatus('Email сохранён', 'success');
                 } else if (email) {
                     alert('Пожалуйста, введите корректный email (с символом @)');
@@ -125,31 +140,30 @@
                 const newEmail = prompt('Введите новый email:', currentEmail);
                 if (newEmail && newEmail.includes('@')) {
                     localStorage.setItem('userEmail', newEmail);
-                    userEmailSpan.textContent = newEmail;
+                    DOM_ELEMENTS.userEmailSpan.textContent = newEmail;
                     showStatus('Email обновлён', 'success');
                 } else if (newEmail) {
                     alert('Некорректный email');
                 }
             }
 
-            // ========== ОТОБРАЖЕНИЕ СТАТУСА ==========
             function showStatus(message, type = 'info') {
-                statusMessage.textContent = message;
-                statusMessage.className = 'status-message';
-                statusMessage.classList.add(`status-${type}`);
+                DOM_ELEMENTS.statusMessage.textContent = message;
+                DOM_ELEMENTS.statusMessage.className = 'status-message';
+                DOM_ELEMENTS.statusMessage.classList.add(`status-${type}`);
                 
                 if (type !== 'error') {
                     setTimeout(() => {
-                        if (statusMessage.textContent === message) {
-                            statusMessage.textContent = '';
-                            statusMessage.className = 'status-message';
+                        if (DOM_ELEMENTS.statusMessage.textContent === message) {
+                            DOM_ELEMENTS.statusMessage.textContent = '';
+                            DOM_ELEMENTS.statusMessage.className = 'status-message';
                         }
                     }, 5000);
                 }
             }
 
-            // ========== ПРОЦЕСС ОПЛАТЫ ==========
-            async function handlePayment() {
+            // ========== ОПЛАТА ==========
+            function handlePayment() {
                 const email = localStorage.getItem('userEmail');
                 
                 if (!email) {
@@ -158,56 +172,29 @@
                     return;
                 }
 
-                showStatus('Подготовка платежа...', 'info');
-                payButton.disabled = true;
+                showStatus('Перенаправление на страницу оплаты...', 'success');
+                DOM_ELEMENTS.payButton.disabled = true;
 
-                try {
-                    // ВАРИАНТ 1: Если у вас есть бэкенд API (замените URL)
-                    // const response = await fetch('/api/create-payment', {
-                    //     method: 'POST',
-                    //     headers: { 'Content-Type': 'application/json' },
-                    //     body: JSON.stringify({
-                    //         amount: TARIFF_PRICE,
-                    //         description: 'Аренда стиральной машины, 2ч 10мин',
-                    //         email: email,
-                    //         minutes: TARIFF_MINUTES
-                    //     })
-                    // });
-                    // const data = await response.json();
-                    // if (data.payment_url) {
-                    //     window.location.href = data.payment_url;
-                    // } else {
-                    //     throw new Error('Не удалось создать платёж');
-                    // }
-
-                    // ВАРИАНТ 2: Прямая ссылка на форму ЮKassa (для теста)
-                    // Замените на реальную ссылку из личного кабинета ЮKassa
-                    const paymentUrl = `https://yoomoney.ru/quickpay/shop-widget?writer=seller&targets=%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%B0%20%D1%81%D1%82%D0%B8%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9%20%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%8B&targets-hint=&default-sum=500&button-text=11&payment-type-choice=on&mobile-payment-type-choice=on&comment=on&hint=&successURL=&quickpay=shop&account=410011234567890&label=washer_${Date.now()}`;
-                    
-                    showStatus('Перенаправление на страницу оплаты...', 'success');
-                    
-                    // Перенаправление на ЮKassa
-                    setTimeout(() => {
-                        window.location.href = paymentUrl;
-                    }, 500);
-
-                } catch (error) {
-                    console.error('Payment error:', error);
-                    showStatus('Ошибка при создании платежа: ' + error.message, 'error');
-                    payButton.disabled = false;
-                }
+                // Формируем label: "ID_устройства|email"
+                const label = DEVICE_ID + '|' + encodeURIComponent(email);
+                
+                // Ссылка на оплату ЮMoney
+                const paymentUrl = `https://yoomoney.ru/quickpay/shop-widget?writer=seller&targets=%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%B0%20%D1%81%D1%82%D0%B8%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9%20%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%8B%20(2%20%D1%87%2010%20%D0%BC%D0%B8%D0%BD)&default-sum=1&button-text=11&payment-type-choice=on&mobile-payment-type-choice=on&comment=on&hint=&successURL=https%3A%2F%2Fbelonozhkina05-gif.github.io%2Flaundry-lokomotiv.githab.io%2Fsuccess.html%3Fdevice%3D${DEVICE_ID}&quickpay=shop&account=${WALLET}&label=${label}`;
+                
+                setTimeout(() => {
+                    window.location.href = paymentUrl;
+                }, 500);
             }
 
             // ========== ИНИЦИАЛИЗАЦИЯ ==========
             function init() {
                 loadEmail();
                 
-                editEmailBtn.addEventListener('click', editEmail);
-                payButton.addEventListener('click', handlePayment);
+                DOM_ELEMENTS.editEmailBtn.addEventListener('click', editEmail);
+                DOM_ELEMENTS.payButton.addEventListener('click', handlePayment);
                 
-                // Клик по email тоже позволяет редактировать
-                document.getElementById('emailBlock').addEventListener('click', (e) => {
-                    if (e.target !== editEmailBtn) {
+                DOM_ELEMENTS.emailBlock.addEventListener('click', (e) => {
+                    if (e.target !== DOM_ELEMENTS.editEmailBtn) {
                         editEmail();
                     }
                 });

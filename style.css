@@ -21,10 +21,8 @@ body {
     border-radius: 36px;
     box-shadow: 0 25px 45px -12px rgba(0, 40, 0, 0.25);
     overflow: hidden;
-    transition: all 0.2s ease;
 }
 
-/* ========== ШАПКА ========== */
 .header {
     background: linear-gradient(135deg, #1a3a1a 0%, #2d5a2d 100%);
     padding: 24px 32px;
@@ -103,7 +101,6 @@ body {
     color: #ffffff;
 }
 
-/* ========== ОСНОВНОЙ КОНТЕНТ ========== */
 .main {
     display: flex;
     flex-wrap: wrap;
@@ -203,7 +200,6 @@ body {
     margin-top: 8px;
 }
 
-/* ========== ПРАВАЯ ЧАСТЬ (ОПЛАТА) ========== */
 .payment-section {
     flex: 1;
     min-width: 300px;
@@ -330,7 +326,6 @@ body {
     border-top: 1px solid #dfd9c8;
 }
 
-/* ========== ПОДВАЛ ========== */
 .footer {
     background: #eef3e6;
     padding: 16px 32px;
@@ -340,7 +335,6 @@ body {
     border-top: 1px solid #d2ddc2;
 }
 
-/* ========== АДАПТИВНОСТЬ ========== */
 @media (max-width: 720px) {
     .header {
         flex-direction: column;
@@ -371,16 +365,5 @@ body {
     .btn-pay {
         font-size: 1.2rem;
         padding: 16px 20px;
-    }
-}
-
-@media (max-width: 400px) {
-    .container {
-        border-radius: 24px;
-    }
-    
-    .header-right {
-        flex-wrap: wrap;
-        justify-content: center;
     }
 }
