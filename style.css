@@ -1,0 +1,386 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(145deg, #e8f0e8 0%, #d4e0d4 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 36px;
+    box-shadow: 0 25px 45px -12px rgba(0, 40, 0, 0.25);
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+/* ========== ШАПКА ========== */
+.header {
+    background: linear-gradient(135deg, #1a3a1a 0%, #2d5a2d 100%);
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 3px solid #ffc107;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sanatorium-name {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    margin: 0;
+}
+
+.subtitle {
+    color: #e0f0d8;
+    font-size: 1rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.header-right {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(5px);
+    padding: 12px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.header-right:hover {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+.email-label {
+    color: #d4e8c8;
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+.email-value {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1rem;
+    border-bottom: 1px dashed rgba(255,255,255,0.5);
+}
+
+.btn-edit {
+    background: none;
+    border: none;
+    color: #ffd966;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: transform 0.2s;
+}
+
+.btn-edit:hover {
+    transform: scale(1.2);
+    color: #ffffff;
+}
+
+/* ========== ОСНОВНОЙ КОНТЕНТ ========== */
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 36px 32px;
+    gap: 40px;
+    background: #fdfdf5;
+}
+
+.info-section {
+    flex: 1.2;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.service-card {
+    background: #f5f9f0;
+    border-radius: 28px;
+    padding: 28px 24px;
+    border: 1px solid #dde8d2;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.03);
+}
+
+.service-icon {
+    font-size: 3.5rem;
+    margin-bottom: 12px;
+}
+
+.service-card h2 {
+    color: #2a472a;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.service-desc {
+    color: #4a5c3e;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.tariff-card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 24px;
+    border: 2px solid #e8dcc0;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.tariff-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 24px rgba(0,40,0,0.08);
+    border-color: #ffc107;
+}
+
+.tariff-badge {
+    background: #ffc107;
+    color: #1e3a1e;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    border-radius: 30px;
+    display: inline-block;
+    margin-bottom: 18px;
+}
+
+.tariff-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+}
+
+.tariff-time {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e3a1e;
+}
+
+.tariff-price {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #b87333;
+    background: #fff1e0;
+    padding: 8px 18px;
+    border-radius: 50px;
+    line-height: 1;
+}
+
+.tariff-note {
+    color: #5c6e4a;
+    font-size: 0.9rem;
+    border-top: 1px dashed #d4cdb0;
+    padding-top: 14px;
+    margin-top: 8px;
+}
+
+/* ========== ПРАВАЯ ЧАСТЬ (ОПЛАТА) ========== */
+.payment-section {
+    flex: 1;
+    min-width: 300px;
+    background: #fafaf5;
+    border-radius: 28px;
+    padding: 28px 24px;
+    border: 1px solid #e8e0cc;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+}
+
+.payment-section h3 {
+    color: #2a472a;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.payment-hint {
+    color: #556b44;
+    margin-bottom: 28px;
+    font-size: 0.95rem;
+}
+
+.btn-pay {
+    width: 100%;
+    background: linear-gradient(145deg, #2d6a2d 0%, #1e4a1e 100%);
+    border: none;
+    border-radius: 60px;
+    padding: 18px 24px;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: 0 8px 16px rgba(0,60,0,0.2);
+    transition: all 0.2s;
+    margin-bottom: 20px;
+    border: 1px solid #3f8a3f;
+}
+
+.btn-pay:hover {
+    background: linear-gradient(145deg, #368036 0%, #265e26 100%);
+    transform: scale(1.01);
+    box-shadow: 0 10px 20px rgba(0,70,0,0.25);
+}
+
+.btn-pay:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-text {
+    letter-spacing: 0.5px;
+}
+
+.btn-arrow {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.status-message {
+    min-height: 48px;
+    padding: 12px 16px;
+    border-radius: 40px;
+    margin-bottom: 28px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.status-success {
+    background: #e3f2e3;
+    color: #1e5e1e;
+    border-left: 5px solid #2e7d32;
+}
+
+.status-error {
+    background: #ffebee;
+    color: #b71c1c;
+    border-left: 5px solid #c62828;
+}
+
+.status-info {
+    background: #e3f2fd;
+    color: #0d47a1;
+    border-left: 5px solid #1565c0;
+}
+
+.info-block {
+    background: #f0f4ea;
+    border-radius: 22px;
+    padding: 22px 20px;
+    margin: 20px 0 18px;
+}
+
+.info-block h4 {
+    color: #2a472a;
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+    font-weight: 600;
+}
+
+.steps {
+    padding-left: 22px;
+    color: #3a4e2e;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.steps li {
+    padding-left: 6px;
+}
+
+.security-note {
+    text-align: center;
+    color: #6c7a5c;
+    font-size: 0.85rem;
+    padding-top: 12px;
+    border-top: 1px solid #dfd9c8;
+}
+
+/* ========== ПОДВАЛ ========== */
+.footer {
+    background: #eef3e6;
+    padding: 16px 32px;
+    text-align: center;
+    color: #4a6240;
+    font-size: 0.8rem;
+    border-top: 1px solid #d2ddc2;
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+@media (max-width: 720px) {
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .sanatorium-name {
+        font-size: 1.5rem;
+    }
+    
+    .main {
+        flex-direction: column;
+        padding: 24px 20px;
+    }
+    
+    .tariff-details {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .tariff-price {
+        align-self: flex-end;
+    }
+    
+    .btn-pay {
+        font-size: 1.2rem;
+        padding: 16px 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .container {
+        border-radius: 24px;
+    }
+    
+    .header-right {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
